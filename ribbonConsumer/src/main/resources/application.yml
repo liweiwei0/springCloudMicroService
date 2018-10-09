@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: ribbonconsumer
+  # ribbon重试机制
+  cloud:
+    loadbalancer:
+      retry:
+        # 开启重试机制
+        enabled: true
+server:
+  port: 3000
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:1111/eureka/
+# ribbon可以才用的配置方式：自动化配置 参数配置
+# 参数配置分两种：全局配置 指定客户端配置
+# 对应类 com.netflix.client.config.CommonClientConfigKey

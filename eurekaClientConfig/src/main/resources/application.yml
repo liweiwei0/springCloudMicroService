@@ -1,0 +1,89 @@
+server:
+  port: ${random.int[10000, 19999]}
+spring:
+  application:
+    name: eurekaclientconfig
+
+eureka:
+
+  # 服务注册类配置
+  # 对应类对象org.springframework.cloud.netflix.eureka.EurekaClientConfigBean
+  client:
+
+    # 指定注册中心
+    # Eureka服务端地址 如果考虑安全校验 使用：http://<username>:<password>@localhost:1111/eureka/
+    service-url:
+      defaultZone: http://localhost:1111/eureka/
+
+    # 其他配置
+    # 启用eureka配置
+    enabled: true
+    # 从eureka服务端获取注册信息的间隔时间 单位秒
+    registry-fetch-interval-seconds: 30
+    # 更新实例信息的变化到eureka服务端的间隔时间 单位秒
+    instance-info-replication-interval-seconds: 30
+    # 初始化实例信息到Eureka服务端的间隔时间 单位秒
+    initial-instance-info-replication-interval-seconds: 40
+    # 轮询Eureka服务端地址更改的间隔时间 单位秒
+    eureka-service-url-poll-interval-seconds: 300
+    # 读取EurekaServer信息的超时时间 单位秒
+    eureka-server-read-timeout-seconds: 8
+    # 链接EurekaServer的超时时间 单位秒
+    eureka-server-connect-timeout-seconds: 5
+    # 从Eureka客户端到所有Eureka服务端的连接总数
+    eureka-server-total-connections: 200
+    # 从Eureka客户端到每个Eureka服务端主机的连接总数
+    eureka-server-total-connections-per-host: 50
+    # Eureka服务端链接的空闲关闭时间 单位秒
+    eureka-connection-idle-timeout-seconds: 30
+    # 心跳连接池的初始化线程数
+    heartbeat-executor-thread-pool-size: 2
+    # 心跳超时重试延迟时间的最大乘数值
+    heartbeat-executor-exponential-back-off-bound: 10
+    # 使用DNS来获取Eureka服务端的serviceUrl
+    use-dns-for-fetching-service-urls: false
+    # 是否要将自身的实例信息注册到Eureka服务端
+    register-with-eureka: true
+    # 是否偏好使用处于相同Zone的Eureka服务端
+    prefer-same-zone-eureka: true
+    # 获取示例时是否过滤 仅保留UP状态的实例
+    filter-only-up-instances: true
+    # 是否从Eureka服务端获取注册信息
+    fetch-registry: true
+
+  # 服务实例类配置
+  # 对应类 org.springframework.cloud.netflix.eureka.EurekaInstanceConfigBean
+  instance:
+
+    # 元数据
+    # 对应类 com.netflix.appinfo.InstanceInfo
+    metadata-map:
+      Zone: bj
+    # 实例名配置
+    # 对应类 com.netflix.appinfo.InstanceInfo
+    # 默认规则 ${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance_id:${server.port}}
+    # 设置随机端口 server.port=0或server.port=${random.int[10000, 19999]}
+    # 可以实现在同一主机上不指定端口就能启动多个实例的效果
+    instance-id: ${spring.application.name}:${random.int}
+    # 端点配置
+    # 健康检查
+    # 如果客户端需要将健康检测交给spring-boot-actuator模块的/health端点 需要添加配置 eureka.client.healthcheck.enabled=true
+    # 其他配置
+    # 是否有限使用IP地址作为主机名的标识
+    prefer-ip-address: false
+    # eureka客户端向服务端发送心跳的间隔时间 单位秒
+    lease-renewal-interval-in-seconds: 30
+    # Eureka服务端在收到最后一次心跳之后等待时间上限 单位秒 超过改时间服务端会将该服务实例从服务清单中剔除
+    lease-expiration-duration-in-seconds: 90
+    # 非安全的通信端口号
+    non-secure-port: 80
+    # 安全的通信端口号
+    secure-port: 443
+    # 是否启用非安全的通信端口号
+    non-secure-port-enabled: true
+    # 是否启用安全的通信端口号 默认是空
+    # secure-port-enabled:
+    # 服务明 默认spring.application.name值 如果没有则为unknown 默认是空
+    # appname:
+    # 主机名 不配置的时候将根据操作系统的主机名来获取
+    # hostname:

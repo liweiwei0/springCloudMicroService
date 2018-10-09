@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: actuator
+server:
+  port: 8000
+# 暴漏全部的服务监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always # 显示健康状况详细信息
+    shutdown:
+      enabled: true # 通过请求 /shutdown 端点关闭服务
+  info:
+    git:
+      mode: simple # full 在/actuator/info中显示git详细信息  simple 在/actuator/info中显示git简略信息
+# /actuator/info 自定义的info端点 否则是空的
+info:
+  app:
+    version: 1.1.1.1.1 多点看起来厉害
+    name: actuator服务监控和管理
+    size: 100M左右
+  date:
+    create: 2018-01-01
+    online_time: 3018-01-01
+    ...: ...
